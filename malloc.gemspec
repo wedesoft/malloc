@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{Object for raw memory allocation and pointer operations}
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
-  s.homepage = %q{http://www.wedesoft.de/}
+  s.homepage = %q{http://www.wedesoft.demon.co.uk/hornetseye-api/}
   s.files = [ 'malloc.gemspec', 'README', 'COPYING' ] +
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
