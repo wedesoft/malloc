@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://www.wedesoft.de/}
-  s.files = [ 'malloc.gemspec', 'README', 'LICENSE' ] +
+  s.files = [ 'malloc.gemspec', 'README', 'COPYING' ] +
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
             Dir.glob( 'ext/*.hh' ) +
