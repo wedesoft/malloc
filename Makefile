@@ -7,7 +7,6 @@ GEM_VERSION = 0.1.0
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
 TAR = tar
-TEST = -t
 
 MAIN = Makefile malloc.gemspec README COPYING
 EXT = ext/extconf.rb $(wildcard ext/*.cc) $(wildcard ext/*.hh)
@@ -22,7 +21,7 @@ check:: ext/malloc.so $(LIB) $(TESTS)
 	$(RUBY) -Iext -Ilib $(TESTS)
 
 install:: malloc-$(GEM_VERSION).gem
-	$(GEM) install $(TEST) $<
+	$(GEM) install $<
 
 uninstall::
 	$(GEM) uninstall malloc || echo Nothing to uninstall
