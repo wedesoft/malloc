@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.version = '0.1.0'
   # gem1.8 help platforms
   # CURRENT, LINUX_586, WIN32, RUBY, RUBY, or DARWIN
-  s.platform = Gem::Platform::CURRENT
+  s.platform = Gem::Platform::RUBY
   # s.platform = 'x86-mswin32-universal'
   # s.platform = Gem::Platform::WIN32
   s.date = Date.today.to_s

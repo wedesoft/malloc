@@ -16,12 +16,12 @@ TESTS = $(wildcard tests/*.rb)
 DOC = $(wildcard doc/*.rb)
 SOURCES = $(MAIN) $(EXT) $(LIB) $(TESTS) $(DOC)
 
-all:: malloc-$(GEM_VERSION)-x86-linux.gem
+all:: malloc-$(GEM_VERSION).gem
 
 check:: ext/malloc.so $(LIB) $(TESTS)
 	$(RUBY) -Iext -Ilib $(TESTS)
 
-install:: malloc-$(GEM_VERSION)-x86-linux.gem
+install:: malloc-$(GEM_VERSION).gem
 	$(GEM) install $(TEST) $<
 
 uninstall::
@@ -33,7 +33,7 @@ dist-gzip:: malloc.tar.gz
 
 dist-bzip2:: malloc.tar.bz2
 
-malloc-$(GEM_VERSION)-x86-linux.gem: malloc.gemspec README $(EXT) $(LIB) $(TESTS) $(DOC)
+malloc-$(GEM_VERSION).gem: malloc.gemspec README $(EXT) $(LIB) $(TESTS) $(DOC)
 	$(GEM) build malloc.gemspec
 
 ext/Makefile: ext/extconf.rb
