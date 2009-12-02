@@ -2,7 +2,7 @@
 .SUFFIXES: .gem .o .cc .hh .rb .tar .gz .bz2
 
 RUBY_VERSION = 1.8
-GEM_VERSION = 0.1.0
+GEM_VERSION = 0.1.1
 
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
