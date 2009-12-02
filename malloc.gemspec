@@ -1,7 +1,7 @@
 require 'date'
 Gem::Specification.new do |s|
   s.name = %q{malloc}
-  s.version = '0.1.2'
+  s.version = '0.1.3'
   # gem1.8 help platforms
   # CURRENT, LINUX_586, WIN32, RUBY, RUBY, or DARWIN
   s.platform = Gem::Platform::RUBY
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   # s.default_executable = %q{...}
   # s.executables = Dir.glob( 'bin/*' ).collect { |f| File.basename f }
   s.require_paths = [ 'lib', 'ext' ]
-  # s.rubyforge_project = %q{malloc}
+  s.rubyforge_project = %q{hornetseye}
   s.extensions = %w{ext/extconf.rb}
   s.has_rdoc = false
   # s.extra_rdoc_files = [ 'README' ]
