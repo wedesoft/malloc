@@ -1,15 +1,15 @@
 require 'date'
 Gem::Specification.new do |s|
   s.name = %q{malloc}
-  s.version = '0.1.1'
+  s.version = '0.1.2'
   # gem1.8 help platforms
   # CURRENT, LINUX_586, WIN32, RUBY, RUBY, or DARWIN
   s.platform = Gem::Platform::RUBY
   # s.platform = 'x86-mswin32-universal'
   # s.platform = Gem::Platform::WIN32
   s.date = Date.today.to_s
-  s.summary = %q{Raw memory access}
-  s.description = %q{Object for raw memory allocation and pointer operations}
+  s.summary = %q{Object for raw memory allocation and pointer operations}
+  s.description = %q{This gem defines the class Malloc. Malloc#new allows you to allocate memory, using Malloc#+ one can do pointer manipulation, and Malloc#read and Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://www.wedesoft.demon.co.uk/hornetseye-api/files/Malloc-rb.html}
@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   # s.rubyforge_project = %q{malloc}
   s.extensions = %w{ext/extconf.rb}
   s.has_rdoc = false
-  # s.extra_rdoc_files = %w{README}
+  # s.extra_rdoc_files = [ 'README' ]
   # s.rdoc_options = %w{--main README}
   s.required_ruby_version = '>= 1.8.5'
   s.requirements << 'GNU/Linux'
