@@ -2,7 +2,7 @@
 .SUFFIXES: .gem .o .cc .hh .rb .tar .gz .bz2
 
 RUBY_VERSION = 1.8
-GEM_VERSION = 0.1.3
+MALLOC_VERSION = 0.1.4
 
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
@@ -15,12 +15,12 @@ TESTS = $(wildcard tests/*.rb)
 DOC = $(wildcard doc/*.rb)
 SOURCES = $(MAIN) $(EXT) $(LIB) $(TESTS) $(DOC)
 
-all:: malloc-$(GEM_VERSION).gem
+all:: malloc-$(MALLOC_VERSION).gem
 
 check:: ext/malloc.so $(LIB) $(TESTS)
 	$(RUBY) -Iext -Ilib $(TESTS)
 
-install:: malloc-$(GEM_VERSION).gem
+install:: malloc-$(MALLOC_VERSION).gem
 	$(GEM) install $<
 
 uninstall::
@@ -32,7 +32,7 @@ dist-gzip:: malloc.tar.gz
 
 dist-bzip2:: malloc.tar.bz2
 
-malloc-$(GEM_VERSION).gem: malloc.gemspec README $(EXT) $(LIB) $(TESTS) $(DOC)
+malloc-$(MALLOC_VERSION).gem: malloc.gemspec README $(EXT) $(LIB) $(TESTS) $(DOC)
 	$(GEM) build malloc.gemspec
 
 ext/Makefile: ext/extconf.rb

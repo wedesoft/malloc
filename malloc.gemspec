@@ -1,7 +1,7 @@
 require 'date'
 Gem::Specification.new do |s|
   s.name = %q{malloc}
-  s.version = '0.1.3'
+  s.version = '0.1.4'
   # gem1.8 help platforms
   # CURRENT, LINUX_586, WIN32, RUBY, RUBY, or DARWIN
   s.platform = Gem::Platform::RUBY
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = %q{This gem defines the class Malloc. Malloc#new allows you to allocate memory, using Malloc#+ one can do pointer manipulation, and Malloc#read and Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
-  s.homepage = %q{http://www.wedesoft.demon.co.uk/hornetseye-api/files/Malloc-rb.html}
+  s.homepage = %q{http://wedesoft.github.com/malloc/}
   s.files = [ 'malloc.gemspec', 'README', 'COPYING' ] +
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
