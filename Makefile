@@ -1,48 +1,69 @@
-.SILENT:
 .SUFFIXES:
 .SUFFIXES: .gem .o .cc .hh .rb .tar .gz .bz2
 
 RUBY_VERSION = 1.8
 MALLOC_VERSION = 0.1.6
 
+CP = cp
+RM = rm -f
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
 TAR = tar
+GIT = git
+SITELIBDIR = $(shell $(RUBY) -r mkmf -e "puts \"\#{Config::CONFIG['sitelibdir']}\"")
+SITEARCHDIR = $(shell $(RUBY) -r mkmf -e "puts \"\#{Config::CONFIG['sitearchdir']}\"")
 
-MAIN = Makefile malloc.gemspec binary.gemspec README COPYING
+MAIN = Makefile source.gemspec binary.gemspec README COPYING
 EXT = ext/extconf.rb $(wildcard ext/*.cc) $(wildcard ext/*.hh)
 LIB = $(wildcard lib/*.rb)
-TESTS = $(wildcard test/*.rb)
+TEST = $(wildcard test/*.rb)
 DOC = $(wildcard doc/*.rb)
-SOURCES = $(MAIN) $(EXT) $(LIB) $(TESTS) $(DOC)
+SOURCES = $(MAIN) $(EXT) $(LIB) $(TEST) $(DOC)
 
-all:: malloc-$(MALLOC_VERSION).gem
+all:: target
 
-check:: ext/malloc.so $(LIB) $(TESTS)
-	$(RUBY) -Iext -Ilib $(TESTS)
+target:: ext/malloc.so
 
-binary:: binary.gemspec ext/malloc.so $(LIB)
+gem:: malloc-$(MALLOC_VERSION).gem
+
+binary-gem:: binary.gemspec ext/malloc.so $(LIB)
 	$(GEM) build binary.gemspec
 
-install:: malloc-$(MALLOC_VERSION).gem
+install:: ext/malloc.so $(LIB)
+	$(CP) $(LIB) $(SITELIBDIR)
+	$(CP) ext/malloc.so $(SITEARCHDIR)
+
+uninstall::
+	$(RM) $(addprefix $(SITELIBDIR)/,$(notdir $(LIB)))
+	$(RM) $(addprefix $(SITEARCHDIR)/,malloc.so)
+
+install-gem:: malloc-$(MALLOC_VERSION).gem
 	$(GEM) install $<
 
-push:: malloc-$(MALLOC_VERSION).gem
+uninstall-gem::
+	$(GEM) uninstall malloc || echo Nothing to uninstall
+
+check:: ext/malloc.so $(LIB) $(TEST)
+	$(RUBY) -Iext -Ilib $(TEST)
+
+push-gem:: malloc-$(MALLOC_VERSION).gem
 	echo Pushing $< in 3 seconds!
 	sleep 3
 	$(GEM) push $<
 
-uninstall::
-	$(GEM) uninstall malloc || echo Nothing to uninstall
+push-git::
+	echo Pushing to origin in 3 seconds!
+	sleep 3
+	$(GIT) push origin master
 
-dist:: malloc.tar.gz
+dist:: dist-gzip
 
-dist-gzip:: malloc.tar.gz
+dist-gzip:: malloc-$(MALLOC_VERSION).tar.gz
 
-dist-bzip2:: malloc.tar.bz2
+dist-bzip2:: malloc-$(MALLOC_VERSION).tar.bz2
 
-malloc-$(MALLOC_VERSION).gem: malloc.gemspec README $(EXT) $(LIB) $(TESTS) $(DOC)
-	$(GEM) build malloc.gemspec
+malloc-$(MALLOC_VERSION).gem: $(SOURCES)
+	$(GEM) build source.gemspec
 
 ext/Makefile: ext/extconf.rb
 	cd ext && $(RUBY) extconf.rb && cd ..
@@ -50,11 +71,12 @@ ext/Makefile: ext/extconf.rb
 ext/malloc.so: ext/Makefile $(EXT)
 	cd ext && $(MAKE) && cd ..
 
-malloc.tar.gz: $(SOURCES)
+malloc-$(MALLOC_VERSION).tar.gz: $(SOURCES)
 	$(TAR) czf $@ $(SOURCES)
 
-malloc.tar.bz2: $(SOURCES)
+malloc-$(MALLOC_VERSION).tar.bz2: $(SOURCES)
 	$(TAR) cjf $@ $(SOURCES)
 
 clean::
 	rm -f *~ ext/*~ ext/*.o ext/*.so ext/Makefile lib/*~ lib/*.so test/*~ doc/*~ *.gem
+
