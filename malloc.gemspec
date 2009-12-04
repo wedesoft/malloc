@@ -13,13 +13,13 @@ Gem::Specification.new do |s|
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://wedesoft.github.com/malloc/}
-  s.files = [ 'malloc.gemspec', 'README', 'COPYING' ] +
+  s.files = [ 'malloc.gemspec', 'Makefile', 'README', 'COPYING' ] +
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
             Dir.glob( 'ext/*.hh' ) +
             [ 'ext/extconf.rb',
-              'tests/ts_malloc.rb' ]
-  s.test_files = [ 'tests/ts_malloc.rb' ]
+              'test/ts_malloc.rb' ]
+  s.test_files = [ 'test/ts_malloc.rb' ]
   # s.default_executable = %q{...}
   # s.executables = Dir.glob( 'bin/*' ).collect { |f| File.basename f }
   s.require_paths = [ 'lib', 'ext' ]

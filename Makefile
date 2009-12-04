@@ -11,7 +11,7 @@ TAR = tar
 MAIN = Makefile malloc.gemspec README COPYING
 EXT = ext/extconf.rb $(wildcard ext/*.cc) $(wildcard ext/*.hh)
 LIB = $(wildcard lib/*.rb)
-TESTS = $(wildcard tests/*.rb)
+TESTS = $(wildcard test/*.rb)
 DOC = $(wildcard doc/*.rb)
 SOURCES = $(MAIN) $(EXT) $(LIB) $(TESTS) $(DOC)
 
@@ -48,4 +48,4 @@ malloc.tar.bz2: $(SOURCES)
 	$(TAR) cjf $@ $(SOURCES)
 
 clean::
-	rm -f *~ ext/*~ ext/*.o ext/*.so ext/Makefile lib/*~ lib/*.so tests/*~ doc/*~ *.gem
+	rm -f *~ ext/*~ ext/*.o ext/*.so ext/Makefile lib/*~ lib/*.so test/*~ doc/*~ *.gem
