@@ -1,11 +1,18 @@
 This software is very experimental at the moment.
+
 The most pressing problem is to achieve a good combination of support across operating systems, support across Ruby versions, and ease of installation for everyone.
 
 http://www.wedesoft.demon.co.uk/hornetseye-api/files/Installation-txt.html
+
 http://rake-compiler.rubyforge.org/
+
 http://pkg-ruby-extras.alioth.debian.org/upstream-devs.html
+
 http://nsis.sourceforge.net/
+
 http://rubyforge.org/tracker/index.php?func=detail&aid=24036&group_id=126&atid=578
+
 http://rubyforge.org/pipermail/rubygems-developers/2009-April/004522.html
+
 http://rubyforge.org/tracker/index.php?func=detail&aid=27503&group_id=126&atid=575
 

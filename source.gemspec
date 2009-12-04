@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.require_paths = [ 'lib', 'ext' ]
   s.rubyforge_project = %q{hornetseye}
   s.extensions = %w{ext/extconf.rb}
-  s.has_rdoc = false
-  # s.extra_rdoc_files = [ 'README' ]
-  # s.rdoc_options = %w{--main README}
+  s.has_rdoc = true
+  s.extra_rdoc_files = [ 'README' ]
+  s.rdoc_options = %w{--exclude=/Makefile|.*\.(cc|hh|rb)/ --main README}
 end
