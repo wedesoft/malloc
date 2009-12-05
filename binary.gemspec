@@ -10,8 +10,7 @@ Gem::Specification.new do |s|
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://wedesoft.github.com/malloc/}
   s.files = [ 'README', 'COPYING' ] +
-            Dir.glob( 'lib/*.rb' ) +
-            Dir.glob( 'ext/*.so' )
+            Dir.glob( 'lib/*.rb' ) + [ 'ext/malloc.so' ]
   s.require_paths = [ 'lib', 'ext' ]
   s.rubyforge_project = %q{hornetseye}
   s.has_rdoc = true
