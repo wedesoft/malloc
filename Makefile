@@ -41,7 +41,7 @@ uninstall::
 	$(RM) $(addprefix $(SITEARCHDIR)/,malloc.so)
 
 install-gem:: malloc-$(MALLOC_VERSION).gem
-	$(GEM) install $<
+	$(GEM) install --local $<
 
 uninstall-gem::
 	$(GEM) uninstall malloc || echo Nothing to uninstall
