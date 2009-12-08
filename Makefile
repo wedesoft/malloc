@@ -6,6 +6,7 @@ MALLOC_VERSION = 0.1.6
 
 CP = cp
 RM = rm -f
+MKDIR = mkdir -p
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
 TAR = tar
@@ -30,6 +31,8 @@ binary-gem:: binary.gemspec ext/malloc.so $(LIB)
 	$(GEM) build binary.gemspec
 
 install:: ext/malloc.so $(LIB)
+	$(MKDIR) $(SITELIBDIR)
+	$(MKDIR) $(SITEARCHDIR)
 	$(CP) $(LIB) $(SITELIBDIR)
 	$(CP) ext/malloc.so $(SITEARCHDIR)
 
