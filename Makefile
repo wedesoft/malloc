@@ -44,7 +44,7 @@ uninstall-gem::
 	$(GEM) uninstall malloc || echo Nothing to uninstall
 
 check:: ext/malloc.so $(LIB) $(TEST)
-	$(RUBY) -Iext -Ilib $(TEST)
+	$(RUBY) -rrubygems -Iext -Ilib $(TEST)
 
 push-gem:: malloc-$(MALLOC_VERSION).gem
 	echo Pushing $< in 3 seconds!
