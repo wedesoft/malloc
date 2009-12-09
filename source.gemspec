@@ -1,11 +1,11 @@
 require 'date'
 Gem::Specification.new do |s|
   s.name = %q{malloc}
-  s.version = '0.1.6'
+  s.version = '0.2.0'
   s.platform = Gem::Platform::RUBY
   s.date = Date.today.to_s
   s.summary = %q{Object for raw memory allocation and pointer operations}
-  s.description = %q{This gem defines the class Malloc. Malloc#new allows you to allocate memory, using Malloc#+ one can do pointer manipulation, and Malloc#read and Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
+  s.description = %q{This Ruby extension defines the class Hornetseye::Malloc. Hornetseye::Malloc#new allows you to allocate memory, using Hornetseye::Malloc#+ one can do pointer manipulation, and Hornetseye::Malloc#read and Hornetseye::Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
   s.author = %q{Jan Wedekind}
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://wedesoft.github.com/malloc/}

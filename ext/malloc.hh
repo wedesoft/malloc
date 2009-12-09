@@ -22,7 +22,7 @@ class Malloc
 {
 public:
   static VALUE cRubyClass;
-  static VALUE init(void);
+  static VALUE init( VALUE rbModule );
   static VALUE mallocNew( VALUE rbClass, VALUE rbSize );
   static VALUE mallocPlus( VALUE rbSelf, VALUE rbOffset );
   static VALUE mallocRead( VALUE rbSelf, VALUE rbLength );

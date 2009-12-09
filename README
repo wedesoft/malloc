@@ -1,2 +1,1 @@
-This software is very experimental at the moment.
-
+This Ruby extension defines the class Malloc. Malloc#new allows you to allocate memory, using Malloc#+ one can do pointer manipulation, and Malloc#read and Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.

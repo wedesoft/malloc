@@ -29,7 +29,8 @@ extern "C" {
 
   void Init_malloc(void)
   {
-    Malloc::init();
+    VALUE rbHornetseye = rb_define_module( "Hornetseye" );
+    Malloc::init( rbHornetseye );
     rb_require( "malloc_ext.rb" );
   }
 

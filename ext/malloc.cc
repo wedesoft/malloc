@@ -29,9 +29,9 @@ using namespace std;
 
 VALUE Malloc::cRubyClass = Qnil;
 
-VALUE Malloc::init(void)
+VALUE Malloc::init( VALUE rbModule )
 {
-  cRubyClass = rb_define_class( "Malloc", rb_cObject );
+  cRubyClass = rb_define_class_under( rbModule, "Malloc", rb_cObject );
   rb_define_singleton_method( cRubyClass, "new",
                               RUBY_METHOD_FUNC( mallocNew ), 1 );
   rb_define_method( cRubyClass, "+",
