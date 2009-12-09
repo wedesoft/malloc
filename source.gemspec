@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
             Dir.glob( 'ext/*.hh' ) +
-            [ 'ext/extconf.rb',
-              'test/ts_malloc.rb' ]
-  s.test_files = [ 'test/ts_malloc.rb' ]
+            [ 'ext/extconf.rb' ] +
+            Dir.glob( 'test/*.rb' )
+  s.test_files = Dir.glob( 'test/tc_*.rb' )
   # s.default_executable = %q{...}
   # s.executables = Dir.glob( 'bin/*' ).collect { |f| File.basename f }
   s.require_paths = [ 'lib', 'ext' ]
