@@ -2,7 +2,7 @@
 .SUFFIXES: .gem .o .cc .hh .rb .tar .gz .bz2
 
 RUBY_VERSION = 1.8
-MALLOC_VERSION = 0.2.0
+MALLOC_VERSION = 0.2.1
 
 CP = cp
 RM = rm -Rf

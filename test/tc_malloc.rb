@@ -10,9 +10,9 @@ class TC_Malloc < Test::Unit::TestCase
 
   def test_read_write
     m = Hornetseye::Malloc.new 6
-    m.write 'abcdef'
+    assert_equal 'abcdef', m.write( 'abcdef' )
     assert_equal 'abcdef', m.read( 6 )
-    m.write 'ghi'
+    assert_equal 'ghi', m.write( 'ghi' )
     assert_equal 'ghidef', m.read( 6 )
     assert_raise( RuntimeError ) { m.read 7 }
     assert_raise( RuntimeError ) { m.write 'abcdefg' }
