@@ -12,6 +12,8 @@ module Hornetseye
         retval
       end
 
+      private :orig_new
+
     end
 
     attr_reader :size
@@ -28,6 +30,8 @@ module Hornetseye
       retval
     end
 
+    private :orig_plus
+
     alias_method :orig_read, :read
 
     def read( length )
@@ -35,6 +39,8 @@ module Hornetseye
         "(illegal attempt to read #{length} bytes)" if length > @size
       orig_read length
     end
+
+    private :orig_read
 
     alias_method :orig_write, :write
 
@@ -45,6 +51,8 @@ module Hornetseye
       end
       orig_write string
     end
+
+    private :orig_write
 
   end
 

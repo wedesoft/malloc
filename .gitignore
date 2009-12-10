@@ -1,4 +1,5 @@
 malloc-*.tar.*
+.yardoc
 *~
 *.gem
 

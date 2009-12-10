@@ -5,10 +5,11 @@ RUBY_VERSION = 1.8
 MALLOC_VERSION = 0.2.0
 
 CP = cp
-RM = rm -f
+RM = rm -Rf
 MKDIR = mkdir -p
 GEM = gem$(RUBY_VERSION)
 RUBY = ruby$(RUBY_VERSION)
+YARDOC = yardoc
 TAR = tar
 GIT = git
 SITELIBDIR = $(shell $(RUBY) -r mkmf -e "puts \"\#{Config::CONFIG['sitelibdir']}\"")
@@ -46,6 +47,9 @@ install-gem:: malloc-$(MALLOC_VERSION).gem
 uninstall-gem::
 	$(GEM) uninstall malloc || echo Nothing to uninstall
 
+yardoc:: README $(LIB)
+	$(YARDOC)
+
 check:: ext/malloc.so $(LIB) $(TEST)
 	$(RUBY) -rrubygems -Iext -Ilib -Itest test/ts_malloc.rb
 
@@ -81,5 +85,5 @@ malloc-$(MALLOC_VERSION).tar.bz2: $(SOURCES)
 	$(TAR) cjf $@ $(SOURCES)
 
 clean::
-	rm -f *~ ext/*~ ext/*.o ext/*.so ext/Makefile lib/*~ lib/*.so test/*~ doc/*~ *.gem
+	$(RM) *~ ext/*~ ext/*.o ext/*.so ext/Makefile lib/*~ lib/*.so test/*~ *.gem doc
 

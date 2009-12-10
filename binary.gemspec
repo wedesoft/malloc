@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir.glob( 'test/tc_*.rb' )
   s.require_paths = [ 'lib', 'ext' ]
   s.rubyforge_project = %q{hornetseye}
-  s.has_rdoc = true
-  s.extra_rdoc_files = [ 'README' ]
-  s.rdoc_options = %w{--exclude=/Makefile|.*\.(cc|hh|rb)/ --main README}
+  s.has_rdoc = 'yard'
+  # s.extra_rdoc_files = [ 'README' ]
+  # s.rdoc_options = %w{--exclude=/Makefile|.*\.(cc|hh|rb)/ --main README}
 end
