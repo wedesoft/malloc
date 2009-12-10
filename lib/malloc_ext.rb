@@ -6,8 +6,6 @@ module Hornetseye
 
     class << self
 
-      alias_method :orig_new, :new
-
       # Create new Malloc object.
       #
       # @param [size] Number of bytes to allocate.
@@ -25,8 +23,6 @@ module Hornetseye
     # Number of bytes allocated.
     attr_reader :size
 
-    alias_method :orig_plus, :+
-
     # Operator for doing pointer arithmetic.
     #
     # @param [offset] Non-negative offset for pointer.
@@ -43,8 +39,6 @@ module Hornetseye
 
     private :orig_plus
 
-    alias_method :orig_read, :read
-
     # Read data from memory.
     #
     # @param [length] Number of bytes to read.
@@ -56,8 +50,6 @@ module Hornetseye
     end
 
     private :orig_read
-
-    alias_method :orig_write, :write
 
     # Write data to memory.
     #

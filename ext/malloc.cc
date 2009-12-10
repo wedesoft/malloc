@@ -32,13 +32,13 @@ VALUE Malloc::cRubyClass = Qnil;
 VALUE Malloc::init( VALUE rbModule )
 {
   cRubyClass = rb_define_class_under( rbModule, "Malloc", rb_cObject );
-  rb_define_singleton_method( cRubyClass, "new",
+  rb_define_singleton_method( cRubyClass, "orig_new",
                               RUBY_METHOD_FUNC( mallocNew ), 1 );
-  rb_define_method( cRubyClass, "+",
+  rb_define_method( cRubyClass, "orig_plus",
                     RUBY_METHOD_FUNC( mallocPlus ), 1 );
-  rb_define_method( cRubyClass, "read",
+  rb_define_method( cRubyClass, "orig_read",
                     RUBY_METHOD_FUNC( mallocRead ), 1 );
-  rb_define_method( cRubyClass, "write",
+  rb_define_method( cRubyClass, "orig_write",
                     RUBY_METHOD_FUNC( mallocWrite ), 1 );
   return cRubyClass;
 }
