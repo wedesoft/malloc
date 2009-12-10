@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'malloc'
+Kernel::require 'malloc'
 
 class TC_Malloc < Test::Unit::TestCase
 
