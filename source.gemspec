@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email = %q{jan@wedesoft.de}
   s.homepage = %q{http://wedesoft.github.com/malloc/}
   s.files = [ 'source.gemspec', 'binary.gemspec', 'Makefile', 'README',
-              'COPYING' ] +
+              'COPYING', '.document' ] +
             Dir.glob( 'lib/*.rb' ) +
             Dir.glob( 'ext/*.cc' ) +
             Dir.glob( 'ext/*.hh' ) +

@@ -15,7 +15,7 @@ GIT = git
 SITELIBDIR = $(shell $(RUBY) -r mkmf -e "puts \"\#{Config::CONFIG['sitelibdir']}\"")
 SITEARCHDIR = $(shell $(RUBY) -r mkmf -e "puts \"\#{Config::CONFIG['sitearchdir']}\"")
 
-MAIN = Makefile source.gemspec binary.gemspec README COPYING
+MAIN = Makefile source.gemspec binary.gemspec README COPYING .document
 EXT = ext/extconf.rb $(wildcard ext/*.cc) $(wildcard ext/*.hh)
 LIB = $(wildcard lib/*.rb)
 TEST = $(wildcard test/*.rb)

@@ -21,6 +21,8 @@ module Hornetseye
     end
 
     # Number of bytes allocated.
+    #
+    # @return [Integer] Size of allocated memory.
     attr_reader :size
 
     # Operator for doing pointer arithmetic.
