@@ -17,6 +17,6 @@ Gem::Specification.new do |s|
   s.require_paths = [ 'lib', 'ext' ]
   s.rubyforge_project = %q{hornetseye}
   s.has_rdoc = 'yard'
-  # s.extra_rdoc_files = [ 'README' ]
-  # s.rdoc_options = %w{--exclude=/Makefile|.*\.(cc|hh|rb)/ --main README}
+  s.extra_rdoc_files = []
+  s.rdoc_options = %w{--no-private}
 end

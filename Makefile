@@ -48,7 +48,7 @@ uninstall-gem::
 	$(GEM) uninstall malloc || echo Nothing to uninstall
 
 yardoc:: README $(LIB)
-	$(YARDOC)
+	$(YARDOC) --no-private
 
 check:: ext/malloc.so $(LIB) $(TEST)
 	$(RUBY) -rrubygems -Iext -Ilib -Itest test/ts_malloc.rb
