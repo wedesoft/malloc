@@ -1,12 +1,12 @@
 # Namespace of the Hornetseye project.
 module Hornetseye
 
-  # Class for allocating raw memory and for doing pointer operations.
+  # Class for allocating raw memory and for doing pointer operations
   class Malloc
 
     class << self
 
-      # Create new Malloc object.
+      # Create new Malloc object
       #
       # @param [size] Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
@@ -20,12 +20,12 @@ module Hornetseye
 
     end
 
-    # Number of bytes allocated.
+    # Number of bytes allocated
     #
     # @return [Integer] Size of allocated memory.
     attr_reader :size
 
-    # Operator for doing pointer arithmetic.
+    # Operator for doing pointer arithmetic
     #
     # @param [offset] Non-negative offset for pointer.
     # @return [Malloc] A new Malloc object.
@@ -41,7 +41,7 @@ module Hornetseye
 
     private :orig_plus
 
-    # Read data from memory.
+    # Read data from memory
     #
     # @param [length] Number of bytes to read.
     # @return [String] A string containing the data.
@@ -53,7 +53,7 @@ module Hornetseye
 
     private :orig_read
 
-    # Write data to memory.
+    # Write data to memory
     #
     # @param [string] A string with the data.
     # @return [String] Returns the parameter `string`.
@@ -71,14 +71,14 @@ module Hornetseye
 
 end
 
-# The string class of the standard library.
+# The string class of the standard library
 #
 # @private
 class String
 
   unless method_defined? :bytesize
 
-    # This method won't be overriden if it is defined already.
+    # This method won't be overriden if it is defined already
     #
     # Provided for compatibility with Ruby 1.8.6. Same as #size.
     #
