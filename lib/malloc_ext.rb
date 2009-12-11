@@ -72,6 +72,8 @@ module Hornetseye
 end
 
 # The string class of the standard library.
+#
+# @private
 class String
 
   unless method_defined? :bytesize
@@ -79,6 +81,8 @@ class String
     # This method won't be overriden if it is defined already.
     #
     # Provided for compatibility with Ruby 1.8.6. Same as #size.
+    #
+    # @private
     def bytesize
       size
     end
