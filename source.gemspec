@@ -1,7 +1,7 @@
 require 'date'
 Gem::Specification.new do |s|
   s.name = %q{malloc}
-  s.version = '0.2.2'
+  s.version = '0.2.3'
   s.platform = Gem::Platform::RUBY
   s.date = Date.today.to_s
   s.summary = %q{Object for raw memory allocation and pointer operations}
