@@ -4,9 +4,7 @@ require 'date'
 require 'rake/clean'
 require 'rake/testtask'
 require 'rake/packagetask'
-require 'rubygems/builder'
 require 'rbconfig'
-require 'yard'
 
 PKG_NAME = 'malloc'
 PKG_VERSION = '0.2.3'
@@ -30,43 +28,6 @@ AUTHOR = %q{Jan Wedekind}
 EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
-$SPEC = Gem::Specification.new do |s|
-  s.name = PKG_NAME
-  s.version = PKG_VERSION
-  s.platform = Gem::Platform::RUBY
-  s.date = Date.today.to_s
-  s.summary = SUMMARY
-  s.description = DESCRIPTION
-  s.author = AUTHOR
-  s.email = EMAIL
-  s.homepage = HOMEPAGE
-  s.files = PKG_FILES
-  s.test_files = TESTS
-  s.require_paths = [ 'lib', 'ext' ]
-  s.rubyforge_project = %q{hornetseye}
-  s.extensions = %w{Rakefile}
-  s.has_rdoc = 'yard'
-  s.extra_rdoc_files = []
-  s.rdoc_options = %w{--no-private}
-end
-$BINSPEC = Gem::Specification.new do |s|
-  s.name = PKG_NAME
-  s.version = PKG_VERSION
-  s.platform = Gem::Platform::CURRENT
-  s.date = Date.today.to_s
-  s.summary = SUMMARY
-  s.description = DESCRIPTION
-  s.author = AUTHOR
-  s.email = EMAIL
-  s.homepage = HOMEPAGE
-  s.files = BIN_FILES
-  s.test_files = TESTS
-  s.require_paths = [ 'lib', 'ext' ]
-  s.rubyforge_project = %q{hornetseye}
-  s.has_rdoc = 'yard'
-  s.extra_rdoc_files = []
-  s.rdoc_options = %w{--no-private}
-end
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
 
 if Config::CONFIG[ 'rubyhdrdir' ]
@@ -93,9 +54,14 @@ Rake::TestTask.new do |t|
   t.test_files = TESTS
 end
 
-YARD::Rake::YardocTask.new :yard do |y|
-  y.options << '--no-private'
-  y.files << FileList[ 'lib/**/*.rb' ]
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new :yard do |y|
+    y.options << '--no-private'
+    y.files << FileList[ 'lib/**/*.rb' ]
+  end
+rescue LoadError
+  STDERR.puts 'Please install \'yard\' if you want to generate documentation'
 end
 
 Rake::PackageTask.new PKG_NAME, PKG_VERSION do |p|
@@ -103,26 +69,67 @@ Rake::PackageTask.new PKG_NAME, PKG_VERSION do |p|
   p.package_files = PKG_FILES
 end
 
-desc "Build the gem file malloc-#{PKG_VERSION}.gem"
-task :gem => [ "pkg/malloc-#{PKG_VERSION}.gem" ]
-file "pkg/malloc-#{PKG_VERSION}.gem" => [ 'pkg' ] + $SPEC.files do
-  Gem::Builder.new( $SPEC ).build
-  verbose true do
-    FileUtils.mv "malloc-#{PKG_VERSION}.gem",
-                 "pkg/malloc-#{PKG_VERSION}.gem"
+begin
+  require 'rubygems/builder'
+  $SPEC = Gem::Specification.new do |s|
+    s.name = PKG_NAME
+    s.version = PKG_VERSION
+    s.platform = Gem::Platform::RUBY
+    s.date = Date.today.to_s
+    s.summary = SUMMARY
+    s.description = DESCRIPTION
+    s.author = AUTHOR
+    s.email = EMAIL
+    s.homepage = HOMEPAGE
+    s.files = PKG_FILES
+    s.test_files = TESTS
+    s.require_paths = [ 'lib', 'ext' ]
+    s.rubyforge_project = %q{hornetseye}
+    s.extensions = %w{Rakefile}
+    s.has_rdoc = 'yard'
+    s.extra_rdoc_files = []
+    s.rdoc_options = %w{--no-private}
   end
-end
-
-desc "Build the gem file malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
-task :gembinary => [ "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" ]
-file "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" => [ 'pkg' ] + $BINSPEC.files do
-  when_writing 'Creating GEM' do
-    Gem::Builder.new( $BINSPEC ).build
+  $BINSPEC = Gem::Specification.new do |s|
+    s.name = PKG_NAME
+    s.version = PKG_VERSION
+    s.platform = Gem::Platform::CURRENT
+    s.date = Date.today.to_s
+    s.summary = SUMMARY
+    s.description = DESCRIPTION
+    s.author = AUTHOR
+    s.email = EMAIL
+    s.homepage = HOMEPAGE
+    s.files = BIN_FILES
+    s.test_files = TESTS
+    s.require_paths = [ 'lib', 'ext' ]
+    s.rubyforge_project = %q{hornetseye}
+    s.has_rdoc = 'yard'
+    s.extra_rdoc_files = []
+    s.rdoc_options = %w{--no-private}
+  end
+  desc "Build the gem file malloc-#{PKG_VERSION}.gem"
+  task :gem => [ "pkg/malloc-#{PKG_VERSION}.gem" ]
+  file "pkg/malloc-#{PKG_VERSION}.gem" => [ 'pkg' ] + $SPEC.files do
+    Gem::Builder.new( $SPEC ).build
     verbose true do
-      FileUtils.mv "malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem",
-                   "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
+      FileUtils.mv "malloc-#{PKG_VERSION}.gem",
+                   "pkg/malloc-#{PKG_VERSION}.gem"
     end
   end
+  desc "Build the gem file malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
+  task :gembinary => [ "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" ]
+  file "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" => [ 'pkg' ] + $BINSPEC.files do
+    when_writing 'Creating GEM' do
+      Gem::Builder.new( $BINSPEC ).build
+      verbose true do
+        FileUtils.mv "malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem",
+                     "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
+      end
+    end
+  end
+rescue LoadError
+  STDERR.puts 'Please install \'rubygems\' if you want to create Gem packages'
 end
 
 rule '.o' => '.cc' do |t|
