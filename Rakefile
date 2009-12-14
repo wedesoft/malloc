@@ -6,7 +6,7 @@ require 'rake/packagetask'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '0.2.3'
+PKG_VERSION = '0.2.4'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
