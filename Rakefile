@@ -86,6 +86,8 @@ file 'ext/malloc.so' => OBJ do |t|
    sh "#{STRIP} --strip-all #{t.name}"
 end
 
+task :test => [ 'ext/malloc.so' ]
+
 Rake::TestTask.new do |t|
   t.libs << 'ext'
   t.test_files = TESTS
