@@ -40,6 +40,7 @@ $SITEARCHDIR = Config::CONFIG[ 'sitearchdir' ]
 
 task :default => :all
 
+desc 'Compile Ruby extension (default)'
 task :all => [ SO_FILE ]
 
 file SO_FILE => OBJ do |t|
