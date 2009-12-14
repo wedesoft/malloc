@@ -10,24 +10,23 @@ PKG_NAME = 'malloc'
 PKG_VERSION = '0.2.3'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
+RB_FILES = FileList[ 'lib/*.rb' ]
+CC_FILES = FileList[ 'ext/*.cc' ]
+HH_FILES = FileList[ 'ext/*.hh' ]
+TC_FILES = FileList[ 'test/tc_*.rb' ]
+TS_FILES = FileList[ 'test/ts_*.rb' ]
+SO_FILE = "ext/#{PKG_NAME}.so"
 PKG_FILES = [ 'Rakefile', 'README', 'COPYING', '.document' ] +
-            FileList[ 'lib/*.rb' ] +
-            FileList[ 'ext/*.cc' ] +
-            FileList[ 'ext/*.hh' ] +
-            FileList[ 'test/*.rb' ]
-BIN_FILES = [ 'README', 'COPYING', '.document' ] +
-            FileList[ 'lib/*.rb' ] +
-            [ 'ext/malloc.so' ] +
-            FileList[ 'test/*.rb' ]
-SRC = FileList[ 'ext/*.cc' ]
-TESTS = FileList[ 'test/tc_*.rb' ]
-OBJ = SRC.ext 'o'
+            RB_FILES + CC_FILES + HH_FILES + TS_FILES + TC_FILES
+BIN_FILES = [ 'README', 'COPYING', '.document', SO_FILE ] +
+            RB_FILES + TS_FILES + TC_FILES
 SUMMARY = %q{Object for raw memory allocation and pointer operations}
 DESCRIPTION = %q{This Ruby extension defines the class Hornetseye::Malloc. Hornetseye::Malloc#new allows you to allocate memory, using Hornetseye::Malloc#+ one can do pointer manipulation, and Hornetseye::Malloc#read and Hornetseye::Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
 AUTHOR = %q{Jan Wedekind}
 EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
+OBJ = CC_FILES.ext 'o'
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
 $CXXFLAGS = "#{$CXXFLAGS} -fPIC"
 if Config::CONFIG[ 'rubyhdrdir' ]
@@ -36,22 +35,46 @@ if Config::CONFIG[ 'rubyhdrdir' ]
 else
   $CXXFLAGS += "#{$CXXFLAGS} -I#{Config::CONFIG[ 'archdir' ]}"
 end
-$RUBYLIB = Config::CONFIG[ 'LIBRUBYARG' ]
+$LIBRUBYARG = Config::CONFIG[ 'LIBRUBYARG' ]
+$SITELIBDIR = Config::CONFIG[ 'sitelibdir' ]
+$SITEARCHDIR = Config::CONFIG[ 'sitearchdir' ]
 
 task :default => :all
 
-task :all => [ 'ext/malloc.so' ]
+task :all => [ SO_FILE ]
 
-file 'ext/malloc.so' => OBJ do |t|
-   sh "#{CXX} -shared -o #{t.name} #{OBJ} #{$RUBYLIB}"
+file SO_FILE => OBJ do |t|
+   sh "#{CXX} -shared -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
    sh "#{STRIP} --strip-all #{t.name}"
 end
 
-task :test => [ 'ext/malloc.so' ]
+task :test => [ SO_FILE ]
+
+desc 'Install Ruby extension'
+task :install => :all do
+  verbose true do
+    FileUtils.mkdir_p $SITELIBDIR
+    FileUtils.mkdir_p $SITEARCHDIR
+    for f in RB_FILES do
+      FileUtils.cp f, "#{$SITELIBDIR}/#{File.basename f}"
+    end
+    FileUtils.cp SO_FILE, "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
+  end
+end
+
+desc 'Uninstall Ruby extension'
+task :uninstall do
+  verbose true do
+    for f in RB_FILES do
+      FileUtils.rm_f "#{$SITELIBDIR}/#{File.basename f}"
+    end
+    FileUtils.rm_f "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
+  end
+end
 
 Rake::TestTask.new do |t|
   t.libs << 'ext'
-  t.test_files = TESTS
+  t.test_files = TC_FILES
 end
 
 begin
@@ -82,7 +105,7 @@ begin
     s.email = EMAIL
     s.homepage = HOMEPAGE
     s.files = PKG_FILES
-    s.test_files = TESTS
+    s.test_files = TC_FILES
     s.require_paths = [ 'lib', 'ext' ]
     s.rubyforge_project = %q{hornetseye}
     s.extensions = %w{Rakefile}
@@ -90,6 +113,7 @@ begin
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
   end
+  GEM_SOURCE = "#{PKG_NAME}-#{PKG_VERSION}.gem"
   $BINSPEC = Gem::Specification.new do |s|
     s.name = PKG_NAME
     s.version = PKG_VERSION
@@ -101,30 +125,29 @@ begin
     s.email = EMAIL
     s.homepage = HOMEPAGE
     s.files = BIN_FILES
-    s.test_files = TESTS
+    s.test_files = TC_FILES
     s.require_paths = [ 'lib', 'ext' ]
     s.rubyforge_project = %q{hornetseye}
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
   end
-  desc "Build the gem file malloc-#{PKG_VERSION}.gem"
-  task :gem => [ "pkg/malloc-#{PKG_VERSION}.gem" ]
-  file "pkg/malloc-#{PKG_VERSION}.gem" => [ 'pkg' ] + $SPEC.files do
+  GEM_BINARY = "#{PKG_NAME}-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
+  desc "Build the gem file #{GEM_SOURCE}"
+  task :gem => [ "pkg/#{GEM_SOURCE}" ]
+  file "pkg/#{GEM_SOURCE}" => [ 'pkg' ] + $SPEC.files do
     Gem::Builder.new( $SPEC ).build
     verbose true do
-      FileUtils.mv "malloc-#{PKG_VERSION}.gem",
-                   "pkg/malloc-#{PKG_VERSION}.gem"
+      FileUtils.mv GEM_SOURCE, "pkg/#{GEM_SOURCE}"
     end
   end
-  desc "Build the gem file malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
-  task :gembinary => [ "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" ]
-  file "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem" => [ 'pkg' ] + $BINSPEC.files do
+  desc "Build the gem file #{GEM_BINARY}"
+  task :gembinary => [ "pkg/#{GEM_BINARY}" ]
+  file "pkg/#{GEM_BINARY}" => [ 'pkg' ] + $BINSPEC.files do
     when_writing 'Creating GEM' do
       Gem::Builder.new( $BINSPEC ).build
       verbose true do
-        FileUtils.mv "malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem",
-                     "pkg/malloc-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
+        FileUtils.mv GEM_BINARY, "pkg/#{GEM_BINARY}"
       end
     end
   end
@@ -140,5 +163,4 @@ file 'ext/error.o' => [ 'ext/error.cc', 'ext/error.hh' ]
 file 'ext/malloc.o' => [ 'ext/malloc.cc', 'ext/malloc.hh', 'ext/error.hh' ]
 
 CLEAN.include 'ext/*.o'
-CLOBBER.include 'ext/malloc.so', 'doc'
-
+CLOBBER.include SO_FILE, 'doc'
