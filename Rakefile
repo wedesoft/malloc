@@ -29,7 +29,7 @@ EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
-
+$CXXFLAGS = "#{$CXXFLAGS} -fPIC"
 if Config::CONFIG[ 'rubyhdrdir' ]
   $CXXFLAGS += "#{$CXXFLAGS} -I#{Config::CONFIG[ 'rubyhdrdir' ]} " +
               "-I#{Config::CONFIG[ 'rubyhdrdir' ]}/#{Config::CONFIG[ 'arch' ]}"
