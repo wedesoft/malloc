@@ -9,7 +9,7 @@ PKG_NAME = 'malloc'
 PKG_VERSION = '0.2.3'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
-RB_FILES = FileList[ 'lib/*.rb' ]
+RB_FILES = FileList[ 'lib/**/*.rb' ]
 CC_FILES = FileList[ 'ext/*.cc' ]
 HH_FILES = FileList[ 'ext/*.hh' ]
 TC_FILES = FileList[ 'test/tc_*.rb' ]
@@ -52,11 +52,11 @@ task :test => [ SO_FILE ]
 desc 'Install Ruby extension'
 task :install => :all do
   verbose true do
-    FileUtils.mkdir_p $SITELIBDIR
-    FileUtils.mkdir_p $SITEARCHDIR
     for f in RB_FILES do
-      FileUtils.cp f, "#{$SITELIBDIR}/#{File.basename f}"
+      FileUtils.mkdir_p "#{$SITELIBDIR}/#{File.dirname( f[ 4 .. -1 ] )}"
+      FileUtils.cp_r f, "#{$SITELIBDIR}/#{f[ 4 .. -1 ]}"
     end
+    FileUtils.mkdir_p $SITEARCHDIR
     FileUtils.cp SO_FILE, "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
   end
 end
@@ -65,7 +65,7 @@ desc 'Uninstall Ruby extension'
 task :uninstall do
   verbose true do
     for f in RB_FILES do
-      FileUtils.rm_f "#{$SITELIBDIR}/#{File.basename f}"
+      FileUtils.rm_f "#{$SITELIBDIR}/#{f[ 4 .. -1 ]}"
     end
     FileUtils.rm_f "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
   end
