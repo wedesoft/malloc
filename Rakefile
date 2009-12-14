@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# This Rakefile is experimental.
 require 'date'
 require 'rake/clean'
 require 'rake/testtask'
@@ -142,7 +141,7 @@ begin
     end
   end
   desc "Build the gem file #{GEM_BINARY}"
-  task :gembinary => [ "pkg/#{GEM_BINARY}" ]
+  task :gem_binary => [ "pkg/#{GEM_BINARY}" ]
   file "pkg/#{GEM_BINARY}" => [ 'pkg' ] + $BINSPEC.files do
     when_writing 'Creating GEM' do
       Gem::Builder.new( $BINSPEC ).build
