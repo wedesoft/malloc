@@ -10,7 +10,7 @@ PKG_NAME = 'malloc'
 PKG_VERSION = '0.2.3'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
-PKG_FILES = [ 'README', 'COPYING', '.document' ] +
+PKG_FILES = [ 'Rakefile', 'README', 'COPYING', '.document' ] +
             FileList[ 'lib/*.rb' ] +
             FileList[ 'ext/*.cc' ] +
             FileList[ 'ext/*.hh' ] +
