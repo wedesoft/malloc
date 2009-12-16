@@ -1,3 +1,23 @@
+# The string class of the standard library
+#
+# @private
+class String
+
+  unless method_defined? :bytesize
+
+    # This method won't be overriden if it is defined already
+    #
+    # Provided for compatibility with Ruby 1.8.6. Same as #size.
+    #
+    # @private
+    def bytesize
+      size
+    end
+
+  end
+  
+end
+
 # Namespace of the Hornetseye project.
 module Hornetseye
 
@@ -69,24 +89,4 @@ module Hornetseye
 
   end
 
-end
-
-# The string class of the standard library
-#
-# @private
-class String
-
-  unless method_defined? :bytesize
-
-    # This method won't be overriden if it is defined already
-    #
-    # Provided for compatibility with Ruby 1.8.6. Same as #size.
-    #
-    # @private
-    def bytesize
-      size
-    end
-
-  end
-  
 end
