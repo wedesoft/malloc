@@ -97,11 +97,11 @@ module Hornetseye
     # @example
     # require 'malloc'
     # include Hornetseye
-    # m = Malloc.new 3
-    # # Malloc(3)
-    # m.write 'abc'
-    # m.read 3
-    # # "abc"
+    # m = Malloc.new 4
+    # # Malloc(4)
+    # m.write 'abcd'
+    # m.read 2
+    # # "ab"
     #
     # @param [length] Number of bytes to read.
     # @return [String] A string containing the data.
@@ -121,11 +121,11 @@ module Hornetseye
     # @example
     # require 'malloc'
     # include Hornetseye
-    # m = Malloc.new 3
-    # # Malloc(3)
-    # m.write 'abc'
-    # m.read 3
-    # # "abc"
+    # m = Malloc.new 4
+    # # Malloc(4)
+    # m.write 'abcd'
+    # m.read 2
+    # # "ab"
     #
     # @param [String] A string with the data.
     # @return [String] Returns the parameter +string+.
