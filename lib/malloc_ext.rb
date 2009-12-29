@@ -129,7 +129,7 @@ module Hornetseye
     # m.read 2
     # # "ab"
     #
-    # @param [String] A string with the data.
+    # @param [String] string A string with the data.
     # @return [String] Returns the parameter +string+.
     #
     # @see #read
