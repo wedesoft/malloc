@@ -73,8 +73,10 @@ module Hornetseye
     # require 'malloc'
     # include Hornetseye
     # m = Malloc.new 4
+    # # Malloc(4)
     # m.write 'abcd'
     # n = m + 2
+    # # Malloc(2)
     # n.read 2
     # # "cd"
     #
