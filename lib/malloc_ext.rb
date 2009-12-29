@@ -1,11 +1,9 @@
-# The string class of the standard library
-#
-# @private
+# String#bytesize is defined if it does not exist already
 class String
 
   unless method_defined? :bytesize
 
-    # This method won't be overriden if it is defined already
+    # String#bytesize is defined if it does not exist already
     #
     # Provided for compatibility with Ruby 1.8.6. Same as #size.
     #
@@ -28,11 +26,13 @@ module Hornetseye
 
       # Create new Malloc object
       #
+      # Allocate the specified number of bytes of raw memory.
+      #
       # @example
-      #   require 'malloc'
-      #   include Hornetseye
-      #   m = Malloc.new 32
-      #   # Malloc(32)
+      # require 'malloc'
+      # include Hornetseye
+      # m = Malloc.new 32
+      # # Malloc(32)
       #
       # @param [size] Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
@@ -61,11 +61,22 @@ module Hornetseye
     # Read data from memory
     #
     # @return [String] A string containing the data.
+    #
+    # @see #read
     def to_s
       read @size
     end
 
     # Operator for doing pointer arithmetic
+    #
+    # @example
+    # require 'malloc'
+    # include Hornetseye
+    # m = Malloc.new 4
+    # m.write 'abcd'
+    # n = m + 2
+    # n.read 2
+    # # "cd"
     #
     # @param [offset] Non-negative offset for pointer.
     # @return [Malloc] A new Malloc object.
@@ -83,8 +94,20 @@ module Hornetseye
 
     # Read data from memory
     #
+    # @example
+    # require 'malloc'
+    # include Hornetseye
+    # m = Malloc.new 3
+    # # Malloc(3)
+    # m.write 'abc'
+    # m.read 3
+    # # "abc"
+    #
     # @param [length] Number of bytes to read.
     # @return [String] A string containing the data.
+    #
+    # @see #write
+    # @see #to_s
     def read( length )
       raise "Only #{@size} bytes of memory left to read " +
         "(illegal attempt to read #{length} bytes)" if length > @size
@@ -95,8 +118,19 @@ module Hornetseye
 
     # Write data to memory
     #
-    # @param [string] A string with the data.
-    # @return [String] Returns the parameter `string`.
+    # @example
+    # require 'malloc'
+    # include Hornetseye
+    # m = Malloc.new 3
+    # # Malloc(3)
+    # m.write 'abc'
+    # m.read 3
+    # # "abc"
+    #
+    # @param [String] A string with the data.
+    # @return [String] Returns the parameter +string+.
+    #
+    # @see #read
     def write( string )
       if string.bytesize > @size
         raise "Must not write more than #{@size} bytes of memory " +
