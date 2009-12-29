@@ -8,6 +8,16 @@ class TC_Malloc < Test::Unit::TestCase
     assert_raise( ArgumentError ) { Hornetseye::Malloc.new }
   end
 
+  def test_inspect
+    assert_equal 'Malloc(32)', Hornetseye::Malloc.new( 32 ).inspect
+  end
+
+  def test_to_s
+    m = Hornetseye::Malloc.new 3
+    m.write 'abc'
+    assert_equal 'abc', m.to_s
+  end
+
   def test_read_write
     m = Hornetseye::Malloc.new 6
     assert_equal 'abcdef', m.write( 'abcdef' )

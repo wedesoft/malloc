@@ -28,6 +28,12 @@ module Hornetseye
 
       # Create new Malloc object
       #
+      # @example
+      #   require 'malloc'
+      #   include Hornetseye
+      #   m = Malloc.new 32
+      #   # Malloc(32)
+      #
       # @param [size] Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
       def new( size )
@@ -44,6 +50,20 @@ module Hornetseye
     #
     # @return [Integer] Size of allocated memory.
     attr_reader :size
+
+    # Display information about this object
+    #
+    # @return [String] A string with information about this object.
+    def inspect
+      "Malloc(#{@size})"
+    end
+
+    # Read data from memory
+    #
+    # @return [String] A string containing the data.
+    def to_s
+      read @size
+    end
 
     # Operator for doing pointer arithmetic
     #
