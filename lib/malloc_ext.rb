@@ -28,7 +28,7 @@ module Hornetseye
       #
       # Allocate the specified number of bytes of raw memory.
       #
-      # @example
+      # @example Allocate raw memory
       # require 'malloc'
       # include Hornetseye
       # m = Malloc.new 32
@@ -69,7 +69,7 @@ module Hornetseye
 
     # Operator for doing pointer arithmetic
     #
-    # @example
+    # @example Pointer arithmetic
     # require 'malloc'
     # include Hornetseye
     # m = Malloc.new 4
@@ -94,7 +94,7 @@ module Hornetseye
 
     # Read data from memory
     #
-    # @example
+    # @example Reading and writing data
     # require 'malloc'
     # include Hornetseye
     # m = Malloc.new 4
@@ -118,7 +118,7 @@ module Hornetseye
 
     # Write data to memory
     #
-    # @example
+    # @example Reading and writing data
     # require 'malloc'
     # include Hornetseye
     # m = Malloc.new 4
