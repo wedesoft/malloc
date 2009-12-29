@@ -34,7 +34,7 @@ module Hornetseye
       # m = Malloc.new 32
       # # Malloc(32)
       #
-      # @param [size] Number of bytes to allocate.
+      # @param [Integer] size Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
       def new( size )
         retval = orig_new size
@@ -80,7 +80,7 @@ module Hornetseye
     # n.read 2
     # # "cd"
     #
-    # @param [offset] Non-negative offset for pointer.
+    # @param [Integer] offset Non-negative offset for pointer.
     # @return [Malloc] A new Malloc object.
     def +( offset )
       if offset > @size
@@ -105,7 +105,7 @@ module Hornetseye
     # m.read 2
     # # "ab"
     #
-    # @param [length] Number of bytes to read.
+    # @param [Integer] length Number of bytes to read.
     # @return [String] A string containing the data.
     #
     # @see #write
