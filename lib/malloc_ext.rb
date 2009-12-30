@@ -48,10 +48,24 @@ module Hornetseye
 
     # Number of bytes allocated
     #
+    # @example Querying size of allocated memory
+    # require 'malloc'
+    # include Hornetseye
+    # m = Malloc.new 32
+    # m.size
+    # # 32
+    # ( m + 8 ).size
+    # # 24
+    #
     # @return [Integer] Size of allocated memory.
     attr_reader :size
 
     # Display information about this object
+    #
+    # @example Displaying information about a Malloc object
+    # require 'malloc'
+    # Hornetseye::Malloc.new( 8 ).inspect
+    # "Malloc(8)"
     #
     # @return [String] A string with information about this object.
     def inspect
@@ -59,6 +73,14 @@ module Hornetseye
     end
 
     # Read data from memory
+    #
+    # @example Convert data of Malloc object to string
+    # require 'malloc'
+    # include Hornetseye
+    # m = Malloc.new 5
+    # m.write 'abcde'
+    # m.to_s
+    # "abcde"
     #
     # @return [String] A string containing the data.
     #
