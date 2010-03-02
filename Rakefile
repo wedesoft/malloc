@@ -6,7 +6,7 @@ require 'rake/packagetask'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '0.2.5'
+PKG_VERSION = '1.0.0'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -15,9 +15,9 @@ HH_FILES = FileList[ 'ext/*.hh' ]
 TC_FILES = FileList[ 'test/tc_*.rb' ]
 TS_FILES = FileList[ 'test/ts_*.rb' ]
 SO_FILE = "ext/#{PKG_NAME}.so"
-PKG_FILES = [ 'Rakefile', 'README', 'COPYING', '.document' ] +
+PKG_FILES = [ 'Rakefile', 'README.md', 'COPYING', '.document' ] +
             RB_FILES + CC_FILES + HH_FILES + TS_FILES + TC_FILES
-BIN_FILES = [ 'README', 'COPYING', '.document', SO_FILE ] +
+BIN_FILES = [ 'README.md', 'COPYING', '.document', SO_FILE ] +
             RB_FILES + TS_FILES + TC_FILES
 SUMMARY = %q{Object for raw memory allocation and pointer operations}
 DESCRIPTION = %q{This Ruby extension defines the class Hornetseye::Malloc. Hornetseye::Malloc#new allows you to allocate memory, using Hornetseye::Malloc#+ one can do pointer manipulation, and Hornetseye::Malloc#read and Hornetseye::Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
