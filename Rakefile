@@ -54,8 +54,8 @@ desc 'Install Ruby extension'
 task :install => :all do
   verbose true do
     for f in RB_FILES do
-      FileUtils.mkdir_p "#{$SITELIBDIR}/#{File.dirname( f[ 4 .. -1 ] )}"
-      FileUtils.cp_r f, "#{$SITELIBDIR}/#{f[ 4 .. -1 ]}"
+      FileUtils.mkdir_p "#{$SITELIBDIR}/#{File.dirname f.gsub( /^lib\//, '' )}"
+      FileUtils.cp_r f, "#{$SITELIBDIR}/#{f.gsub( /^lib\//, '' )}"
     end
     FileUtils.mkdir_p $SITEARCHDIR
     FileUtils.cp SO_FILE, "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
@@ -66,7 +66,7 @@ desc 'Uninstall Ruby extension'
 task :uninstall do
   verbose true do
     for f in RB_FILES do
-      FileUtils.rm_f "#{$SITELIBDIR}/#{f[ 4 .. -1 ]}"
+      FileUtils.rm_f "#{$SITELIBDIR}/#{f.gsub /^lib\//, ''}"
     end
     FileUtils.rm_f "#{$SITEARCHDIR}/#{File.basename SO_FILE}"
   end
