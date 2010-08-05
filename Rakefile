@@ -137,15 +137,17 @@ begin
   desc "Build the gem file #{GEM_SOURCE}"
   task :gem => [ "pkg/#{GEM_SOURCE}" ]
   file "pkg/#{GEM_SOURCE}" => [ 'pkg' ] + $SPEC.files do
-    Gem::Builder.new( $SPEC ).build
-    verbose true do
-      FileUtils.mv GEM_SOURCE, "pkg/#{GEM_SOURCE}"
+    when_writing 'Creating GEM' do
+      Gem::Builder.new( $SPEC ).build
+      verbose true do
+        FileUtils.mv GEM_SOURCE, "pkg/#{GEM_SOURCE}"
+      end
     end
   end
   desc "Build the gem file #{GEM_BINARY}"
   task :gem_binary => [ "pkg/#{GEM_BINARY}" ]
   file "pkg/#{GEM_BINARY}" => [ 'pkg' ] + $BINSPEC.files do
-    when_writing 'Creating GEM' do
+    when_writing 'Creating binary GEM' do
       Gem::Builder.new( $BINSPEC ).build
       verbose true do
         FileUtils.mv GEM_BINARY, "pkg/#{GEM_BINARY}"
