@@ -166,4 +166,4 @@ file 'ext/error.o' => [ 'ext/error.cc', 'ext/error.hh' ]
 file 'ext/malloc.o' => [ 'ext/malloc.cc', 'ext/malloc.hh', 'ext/error.hh' ]
 
 CLEAN.include 'ext/*.o'
-CLOBBER.include SO_FILE, 'doc'
+CLOBBER.include SO_FILE, 'doc', '.yardoc'
