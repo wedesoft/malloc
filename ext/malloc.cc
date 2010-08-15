@@ -53,7 +53,7 @@ VALUE Malloc::mallocNew( VALUE rbClass, VALUE rbSize )
                 << " bytes of memory" );
     retVal = Data_Wrap_Struct( rbClass, 0, xfree, (void *)self );
   } catch( std::exception &e ) {
-    rb_raise( rb_eRuntimeError, e.what() );
+    rb_raise( rb_eRuntimeError, "%s", e.what() );
   };
   return retVal;
 }
@@ -68,7 +68,7 @@ VALUE Malloc::mallocPlus( VALUE rbSelf, VALUE rbOffset )
                 << offset << ')' );
     retVal = Data_Wrap_Struct( cRubyClass, 0, 0, (void *)( self + offset ) );
   } catch( std::exception &e ) {
-    rb_raise( rb_eRuntimeError, e.what() );
+    rb_raise( rb_eRuntimeError, "%s", e.what() );
   };
   return retVal;
 }
