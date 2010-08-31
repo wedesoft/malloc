@@ -21,6 +21,7 @@ class TC_Malloc < Test::Unit::TestCase
 
   def test_new
     assert_nothing_raised { Hornetseye::Malloc.new 32 }
+    assert_nothing_raised { Hornetseye::Malloc 32 }
     assert_raise( ArgumentError ) { Hornetseye::Malloc.new }
   end
 

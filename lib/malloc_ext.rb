@@ -52,6 +52,8 @@ module Hornetseye
       #
       # @param [Integer] size Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
+      #
+      # @see Malloc
       def new( size )
         retval = orig_new size
         retval.instance_eval { @size = size }
@@ -182,5 +184,23 @@ module Hornetseye
     private :orig_write
 
   end
+
+  # Shortcut for instantiating Malloc object
+  #
+  # @example Create malloc object
+  # require 'malloc'
+  # include Hornetseye
+  # m = Malloc 4
+  # # Malloc(4)
+  #
+  # @param [Integer] size Number of bytes to allocate.
+  # @return [Malloc] A new Malloc object.
+  #
+  # @see Malloc.new
+  def Malloc( size )
+    Malloc.new size
+  end
+
+  module_function :Malloc
 
 end
