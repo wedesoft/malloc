@@ -45,10 +45,10 @@ module Hornetseye
       # Allocate the specified number of bytes of raw memory.
       #
       # @example Allocate raw memory
-      # require 'malloc'
-      # include Hornetseye
-      # m = Malloc.new 32
-      # # Malloc(32)
+      #   require 'malloc'
+      #   include Hornetseye
+      #   m = Malloc.new 32
+      #   # Malloc(32)
       #
       # @param [Integer] size Number of bytes to allocate.
       # @return [Malloc] A new Malloc object.
@@ -67,13 +67,13 @@ module Hornetseye
     # Number of bytes allocated
     #
     # @example Querying size of allocated memory
-    # require 'malloc'
-    # include Hornetseye
-    # m = Malloc.new 32
-    # m.size
-    # # 32
-    # ( m + 8 ).size
-    # # 24
+    #   require 'malloc'
+    #   include Hornetseye
+    #   m = Malloc.new 32
+    #   m.size
+    #   # 32
+    #   ( m + 8 ).size
+    #   # 24
     #
     # @return [Integer] Size of allocated memory.
     attr_reader :size
@@ -81,9 +81,9 @@ module Hornetseye
     # Display information about this object
     #
     # @example Displaying information about a Malloc object
-    # require 'malloc'
-    # Hornetseye::Malloc.new( 8 ).inspect
-    # "Malloc(8)"
+    #   require 'malloc'
+    #   Hornetseye::Malloc.new( 8 ).inspect
+    #   "Malloc(8)"
     #
     # @return [String] A string with information about this object.
     def inspect
@@ -93,12 +93,12 @@ module Hornetseye
     # Read data from memory
     #
     # @example Convert data of Malloc object to string
-    # require 'malloc'
-    # include Hornetseye
-    # m = Malloc.new 5
-    # m.write 'abcde'
-    # m.to_s
-    # "abcde"
+    #   require 'malloc'
+    #   include Hornetseye
+    #   m = Malloc.new 5
+    #   m.write 'abcde'
+    #   m.to_s
+    #   "abcde"
     #
     # @return [String] A string containing the data.
     #
@@ -110,15 +110,15 @@ module Hornetseye
     # Operator for doing pointer arithmetic
     #
     # @example Pointer arithmetic
-    # require 'malloc'
-    # include Hornetseye
-    # m = Malloc.new 4
-    # # Malloc(4)
-    # m.write 'abcd'
-    # n = m + 2
-    # # Malloc(2)
-    # n.read 2
-    # # "cd"
+    #   require 'malloc'
+    #   include Hornetseye
+    #   m = Malloc.new 4
+    #   # Malloc(4)
+    #   m.write 'abcd'
+    #   n = m + 2
+    #   # Malloc(2)
+    #   n.read 2
+    #   # "cd"
     #
     # @param [Integer] offset Non-negative offset for pointer.
     # @return [Malloc] A new Malloc object.
@@ -137,13 +137,13 @@ module Hornetseye
     # Read data from memory
     #
     # @example Reading and writing data
-    # require 'malloc'
-    # include Hornetseye
-    # m = Malloc.new 4
-    # # Malloc(4)
-    # m.write 'abcd'
-    # m.read 2
-    # # "ab"
+    #   require 'malloc'
+    #   include Hornetseye
+    #   m = Malloc.new 4
+    #   # Malloc(4)
+    #   m.write 'abcd'
+    #   m.read 2
+    #   # "ab"
     #
     # @param [Integer] length Number of bytes to read.
     # @return [String] A string containing the data.
@@ -161,13 +161,13 @@ module Hornetseye
     # Write data to memory
     #
     # @example Reading and writing data
-    # require 'malloc'
-    # include Hornetseye
-    # m = Malloc.new 4
-    # # Malloc(4)
-    # m.write 'abcd'
-    # m.read 2
-    # # "ab"
+    #   require 'malloc'
+    #   include Hornetseye
+    #   m = Malloc.new 4
+    #   # Malloc(4)
+    #   m.write 'abcd'
+    #   m.read 2
+    #   # "ab"
     #
     # @param [String] string A string with the data.
     # @return [String] Returns the parameter +string+.
@@ -188,10 +188,10 @@ module Hornetseye
   # Shortcut for instantiating Malloc object
   #
   # @example Create malloc object
-  # require 'malloc'
-  # include Hornetseye
-  # m = Malloc 4
-  # # Malloc(4)
+  #   require 'malloc'
+  #   include Hornetseye
+  #   m = Malloc 4
+  #   # Malloc(4)
   #
   # @param [Integer] size Number of bytes to allocate.
   # @return [Malloc] A new Malloc object.
