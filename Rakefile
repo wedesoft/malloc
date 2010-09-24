@@ -112,6 +112,7 @@ begin
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
+    s.add_development_dependency %q{rake}
   end
   GEM_SOURCE = "#{PKG_NAME}-#{PKG_VERSION}.gem"
   $BINSPEC = Gem::Specification.new do |s|
@@ -128,7 +129,6 @@ begin
     s.test_files = TC_FILES
     s.require_paths = [ 'lib', 'ext' ]
     s.rubyforge_project = %q{hornetseye}
-    s.add_development_dependency %q{rake}
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
     s.rdoc_options = %w{--no-private}
