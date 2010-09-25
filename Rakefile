@@ -6,7 +6,7 @@ require 'rake/packagetask'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.1.0'
+PKG_VERSION = '1.1.1'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -162,7 +162,6 @@ rule '.o' => '.cc' do |t|
    sh "#{CXX} #{$CXXFLAGS} -c -o #{t.name} #{t.source}"
 end
 
-file 'ext/error.o' => [ 'ext/error.cc', 'ext/error.hh' ]
 file 'ext/malloc.o' => [ 'ext/malloc.cc', 'ext/malloc.hh', 'ext/error.hh' ]
 
 CLEAN.include 'ext/*.o'
