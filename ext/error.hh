@@ -1,5 +1,5 @@
 /* HornetsEye - Computer Vision with Ruby
-   Copyright (C) 2006, 2007, 2008, 2009   Jan Wedekind
+   Copyright (C) 2006, 2007, 2008, 2009, 2010   Jan Wedekind
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -18,20 +18,19 @@
 
 #include <exception>
 #include <sstream>
-#include <string>
 
 class Error: public std::exception
 {
 public:
   Error(void) {}
   Error( Error &e ): std::exception( e )
-  { m_message << e.m_message.str(); }
+    { m_message << e.m_message.str(); }
   virtual ~Error(void) throw() {}
   template< typename T >
   std::ostream &operator<<( const T &t )
-  { m_message << t; return m_message; }
-  std::ostream &operator<<( std::ostream& (*__pf)( std::ostream&) )
-  { (*__pf)( m_message ); return m_message; }
+    { m_message << t; return m_message; }
+  std::ostream &operator<<( std::ostream& (*__pf)(std::ostream&) )
+    { (*__pf)( m_message ); return m_message; }
   virtual const char* what(void) const throw() {
     temp = m_message.str();
     return temp.c_str();
