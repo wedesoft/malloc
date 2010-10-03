@@ -90,21 +90,16 @@ module Hornetseye
       "Malloc(#{@size})"
     end
 
-    # Read data from memory
+    # Display information about this object
     #
-    # @example Convert data of Malloc object to string
+    # @example Displaying information about a Malloc object
     #   require 'malloc'
-    #   include Hornetseye
-    #   m = Malloc.new 5
-    #   m.write 'abcde'
-    #   m.to_s
-    #   "abcde"
+    #   Hornetseye::Malloc.new( 8 ).to_s
+    #   "Malloc(8)"
     #
-    # @return [String] A string containing the data.
-    #
-    # @see #read
+    # @return [String] A string with information about this object.
     def to_s
-      read @size
+      inspect
     end
 
     # Operator for doing pointer arithmetic

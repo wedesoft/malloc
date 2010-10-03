@@ -30,9 +30,7 @@ class TC_Malloc < Test::Unit::TestCase
   end
 
   def test_to_s
-    m = Hornetseye::Malloc.new 3
-    m.write 'abc'
-    assert_equal 'abc', m.to_s
+    assert_equal 'Malloc(32)', Hornetseye::Malloc.new( 32 ).to_s
   end
 
   def test_read_write
