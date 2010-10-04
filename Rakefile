@@ -3,6 +3,7 @@ require 'date'
 require 'rake/clean'
 require 'rake/testtask'
 require 'rake/packagetask'
+require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
@@ -27,7 +28,7 @@ HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
 OBJ = CC_FILES.ext 'o'
 $CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
-$CXXFLAGS = "#{$CXXFLAGS} -fPIC"
+$CXXFLAGS = "#{$CXXFLAGS} -fPIC -DNDEBUG"
 if RbConfig::CONFIG[ 'rubyhdrdir' ]
   $CXXFLAGS += "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'rubyhdrdir' ]} " +
               "-I#{RbConfig::CONFIG[ 'rubyhdrdir' ]}/#{RbConfig::CONFIG[ 'arch' ]}"
@@ -163,7 +164,10 @@ rule '.o' => '.cc' do |t|
    sh "#{CXX} #{$CXXFLAGS} -c -o #{t.name} #{t.source}"
 end
 
-file 'ext/malloc.o' => [ 'ext/malloc.cc', 'ext/malloc.hh', 'ext/error.hh' ]
+file ".depends.mf" => CC_FILES do |t|
+  sh "#{CXX} -MM #{$CXXFLAGS} #{t.prerequisites.join ' '} > #{t.name}"
+end
+import ".depends.mf"
 
 CLEAN.include 'ext/*.o'
 CLOBBER.include SO_FILE, 'doc', '.yardoc'
