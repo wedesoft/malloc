@@ -7,7 +7,7 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.1.1'
+PKG_VERSION = '1.1.2'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -173,4 +173,4 @@ end
 import ".depends.mf"
 
 CLEAN.include 'ext/*.o'
-CLOBBER.include SO_FILE, 'doc', '.yardoc'
+CLOBBER.include SO_FILE, 'doc', '.yardoc', '.depends.mf'

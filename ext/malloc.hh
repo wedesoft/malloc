@@ -16,7 +16,7 @@
 #ifndef MALLOC_HH
 #define MALLOC_HH
 
-#include <ruby.h>
+#include "rubyinc.hh"
 
 class Malloc
 {
