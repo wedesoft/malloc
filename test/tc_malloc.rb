@@ -39,6 +39,13 @@ class TC_Malloc < Test::Unit::TestCase
     assert_equal 'Malloc(32)', Malloc.new( 32 ).to_s
   end
 
+  def test_dup
+    m = Malloc.new( 3 )
+    m.write 'abc'
+    m.dup.write 'def'
+    assert_equal 'abc', m.read( 3 )
+  end
+
   def test_read_write
     m = Malloc.new 6
     assert_equal 'abcdef', m.write( 'abcdef' )

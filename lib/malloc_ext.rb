@@ -90,6 +90,15 @@ module Hornetseye
       "Malloc(#{@size})"
     end
 
+    # Duplicate object
+    #
+    # @return [Malloc] A new malloc object with a copy of the data.
+    def dup
+      retval = Malloc.new @size
+      retval.write self
+      retval
+    end
+
     # Display information about this object
     #
     # @example Displaying information about a Malloc object
