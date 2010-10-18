@@ -51,6 +51,7 @@ class TC_Malloc < Test::Unit::TestCase
     assert_equal 'jkldef', m.read( 6 )
     assert_raise( RuntimeError ) { m.read 7 }
     assert_raise( RuntimeError ) { m.write 'abcdefg' }
+    assert_raise( RuntimeError ) { m.write Malloc.new( 7 ) }
   end
 
   def test_plus
