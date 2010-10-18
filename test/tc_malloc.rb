@@ -19,35 +19,45 @@ Kernel::require 'malloc'
 
 class TC_Malloc < Test::Unit::TestCase
 
+  Malloc = Hornetseye::Malloc
+
+  def Malloc( *args )
+    Hornetseye::Malloc *args
+  end
+
   def test_new
-    assert_nothing_raised { Hornetseye::Malloc.new 32 }
-    assert_nothing_raised { Hornetseye::Malloc 32 }
-    assert_raise( ArgumentError ) { Hornetseye::Malloc.new }
+    assert_nothing_raised { Malloc.new 32 }
+    assert_nothing_raised { Malloc 32 }
+    assert_raise( ArgumentError ) { Malloc.new }
   end
 
   def test_inspect
-    assert_equal 'Malloc(32)', Hornetseye::Malloc.new( 32 ).inspect
+    assert_equal 'Malloc(32)', Malloc.new( 32 ).inspect
   end
 
   def test_to_s
-    assert_equal 'Malloc(32)', Hornetseye::Malloc.new( 32 ).to_s
+    assert_equal 'Malloc(32)', Malloc.new( 32 ).to_s
   end
 
   def test_read_write
-    m = Hornetseye::Malloc.new 6
+    m = Malloc.new 6
     assert_equal 'abcdef', m.write( 'abcdef' )
     assert_equal 'abcdef', m.read( 6 )
     assert_equal 'ghi', m.write( 'ghi' )
     assert_equal 'ghidef', m.read( 6 )
+    n = Malloc.new 3
+    n.write 'jkl'
+    assert_equal n, m.write( n )
+    assert_equal 'jkldef', m.read( 6 )
     assert_raise( RuntimeError ) { m.read 7 }
     assert_raise( RuntimeError ) { m.write 'abcdefg' }
   end
 
   def test_plus
-    assert_raise( RuntimeError ) { Hornetseye::Malloc.new( 2 ) + ( -1 ) }
-    assert_nothing_raised { Hornetseye::Malloc.new( 2 ) + 2 }
-    assert_raise( RuntimeError ) { Hornetseye::Malloc.new( 2 ) + 3 }
-    m = Hornetseye::Malloc.new 6
+    assert_raise( RuntimeError ) { Malloc.new( 2 ) + ( -1 ) }
+    assert_nothing_raised { Malloc.new( 2 ) + 2 }
+    assert_raise( RuntimeError ) { Malloc.new( 2 ) + 3 }
+    m = Malloc.new 6
     m.write 'abcdef'
     assert_equal 'cde', ( m + 2 ).read( 3 )
     assert_raise( RuntimeError ) { ( m + 2 ).read 5 }

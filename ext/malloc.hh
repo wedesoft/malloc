@@ -26,7 +26,7 @@ public:
   static VALUE mallocNew( VALUE rbClass, VALUE rbSize );
   static VALUE mallocPlus( VALUE rbSelf, VALUE rbOffset );
   static VALUE mallocRead( VALUE rbSelf, VALUE rbLength );
-  static VALUE mallocWrite( VALUE rbSelf, VALUE rbString );
+  static VALUE mallocWrite( int argc, VALUE *rbArgv, VALUE rbSelf );
 };
 
 #endif

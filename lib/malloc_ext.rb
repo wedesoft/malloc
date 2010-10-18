@@ -164,16 +164,24 @@ module Hornetseye
     #   m.read 2
     #   # "ab"
     #
-    # @param [String] string A string with the data.
+    # @param [String,Malloc] data A string or malloc object with the data.
     # @return [String] Returns the parameter +string+.
     #
     # @see #read
-    def write( string )
-      if string.bytesize > @size
-        raise "Must not write more than #{@size} bytes of memory " +
-          "(illegal attempt to write #{string.bytesize} bytes)"
+    def write( data )
+      if data.is_a? Malloc
+        if data.size > @size
+          raise "Must not write more than #{@size} bytes of memory " +
+            "(illegal attempt to write #{data.size} bytes)"
+        end
+        orig_write data, data.size
+      else
+        if data.bytesize > @size
+          raise "Must not write more than #{@size} bytes of memory " +
+            "(illegal attempt to write #{data.bytesize} bytes)"
+        end
+        orig_write data
       end
-      orig_write string
     end
 
     private :orig_write

@@ -39,7 +39,7 @@ VALUE Malloc::init( VALUE rbModule )
   rb_define_method( cRubyClass, "orig_read",
                     RUBY_METHOD_FUNC( mallocRead ), 1 );
   rb_define_method( cRubyClass, "orig_write",
-                    RUBY_METHOD_FUNC( mallocWrite ), 1 );
+                    RUBY_METHOD_FUNC( mallocWrite ), -1 );
   return cRubyClass;
 }
 
@@ -80,9 +80,28 @@ VALUE Malloc::mallocRead( VALUE rbSelf, VALUE rbLength )
   return rb_str_new( self, length );
 }
 
-VALUE Malloc::mallocWrite( VALUE rbSelf, VALUE rbString )
+VALUE Malloc::mallocWrite( int argc, VALUE *rbArgv, VALUE rbSelf )
 {
-  char *self; Data_Get_Struct( rbSelf, char, self );
-  memcpy( self, StringValuePtr( rbString ), RSTRING_LEN( rbString ) );
-  return rbString;
+  VALUE retVal = Qnil;
+  try {
+    char *self; Data_Get_Struct( rbSelf, char, self );
+    ERRORMACRO( argc == 1 || argc == 2, Error, , "Malloc#write accepts "
+                  "one or two arguments (not " << argc << ")" );
+    if ( argc == 1 ) {
+      VALUE rbString = rbArgv[0];
+      memcpy( self, StringValuePtr( rbString ), RSTRING_LEN( rbString ) );
+      retVal = rbString;
+    } else {
+      VALUE rbOther = rbArgv[0];
+      VALUE rbSize = rbArgv[1];
+      char *other; Data_Get_Struct( rbOther, char, other );
+      int size = NUM2INT( rbSize );
+      memcpy( self, other, size );
+      retVal = rbOther;
+    };
+  } catch ( std::exception &e ) {
+    rb_raise( rb_eRuntimeError, "%s", e.what() );
+  };
+  return retVal;
 }
+
