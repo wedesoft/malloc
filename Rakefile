@@ -7,7 +7,7 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.3.0'
+PKG_VERSION = '1.3.1'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -35,7 +35,7 @@ if RbConfig::CONFIG[ 'rubyhdrdir' ]
 else
   $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'archdir' ]}"
 end
-$LIBRUBYARG = RbConfig::CONFIG[ 'LIBRUBYARG' ]
+$LIBRUBYARG = "-L#{RbConfig::CONFIG[ 'libdir' ]} #{RbConfig::CONFIG[ 'LIBRUBYARG' ]}"
 $SITELIBDIR = RbConfig::CONFIG[ 'sitelibdir' ]
 $SITEARCHDIR = RbConfig::CONFIG[ 'sitearchdir' ]
 
