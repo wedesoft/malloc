@@ -7,14 +7,15 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.3.3'
+PKG_VERSION = '1.3.4'
+CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
 CC_FILES = FileList[ 'ext/*.cc' ]
 HH_FILES = FileList[ 'ext/*.hh' ] + FileList[ 'ext/*.tcc' ]
 TC_FILES = FileList[ 'test/tc_*.rb' ]
 TS_FILES = FileList[ 'test/ts_*.rb' ]
-SO_FILE = "ext/#{PKG_NAME}.so"
+SO_FILE = "ext/#{PKG_NAME}.#{CFG[ 'DLEXT' ]}"
 PKG_FILES = [ 'Rakefile', 'README.md', 'COPYING', '.document' ] +
             RB_FILES + CC_FILES + HH_FILES + TS_FILES + TC_FILES
 BIN_FILES = [ 'README.md', 'COPYING', '.document', SO_FILE ] +
@@ -26,20 +27,18 @@ EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
 OBJ = CC_FILES.ext 'o'
-$CXXFLAGS = "-DNDEBUG #{RbConfig::CONFIG[ 'CPPFLAGS' ]} " +
-            "#{RbConfig::CONFIG[ 'CFLAGS' ]}"
-if RbConfig::CONFIG[ 'rubyhdrdir' ]
-  $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'rubyhdrdir' ]} " +
-              "-I#{RbConfig::CONFIG[ 'rubyhdrdir' ]}/#{RbConfig::CONFIG[ 'arch' ]}"
+$CXXFLAGS = "-DNDEBUG #{CFG[ 'CPPFLAGS' ]} #{CFG[ 'CFLAGS' ]}"
+if CFG[ 'rubyhdrdir' ]
+  $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG[ 'rubyhdrdir' ]} " + 
+              "-I#{CFG[ 'rubyhdrdir' ]}/#{CFG[ 'arch' ]}"
 else
-  $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'archdir' ]}"
+  $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG[ 'archdir' ]}"
 end
-$LIBRUBYARG = "-L#{RbConfig::CONFIG[ 'libdir' ]} " +
-              "#{RbConfig::CONFIG[ 'LIBRUBYARG' ]} #{RbConfig::CONFIG[ 'LDFLAGS' ]} " +
-              "#{RbConfig::CONFIG[ 'SOLIBS' ]} #{RbConfig::CONFIG[ 'DLDLIBS' ]}"
-$SITELIBDIR = RbConfig::CONFIG[ 'sitelibdir' ]
-$SITEARCHDIR = RbConfig::CONFIG[ 'sitearchdir' ]
-$LDSHARED = RbConfig::CONFIG[ 'LDSHARED' ][ 4 .. -1 ]
+$LIBRUBYARG = "-L#{CFG[ 'libdir' ]} #{CFG[ 'LIBRUBYARG' ]} #{CFG[ 'LDFLAGS' ]} " +
+              "#{CFG[ 'SOLIBS' ]} #{CFG[ 'DLDLIBS' ]}"
+$SITELIBDIR = CFG[ 'sitelibdir' ]
+$SITEARCHDIR = CFG[ 'sitearchdir' ]
+$LDSHARED = CFG[ 'LDSHARED' ][ CFG[ 'LDSHARED' ].index( ' ' ) .. -1 ]
 
 task :default => :all
 
@@ -166,7 +165,7 @@ rule '.o' => '.cc' do |t|
 end
 
 file ".depends.mf" do |t|
-  sh "g++ -MM #{$CXXFLAGS} #{CC_FILES.join ' '} | " +
+  sh "g++ -MM #{CC_FILES.join ' '} | " +
     "sed -e :a -e N -e 's/\\n/\\$/g' -e ta | " +
     "sed -e 's/ *\\\\\\$ */ /g' -e 's/\\$/\\n/g' | sed -e 's/^/ext\\//' > #{t.name}"
 end
