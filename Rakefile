@@ -7,7 +7,7 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.3.1'
+PKG_VERSION = '1.3.2'
 CXX = ENV[ 'CXX' ] || 'g++'
 STRIP = ENV[ 'STRIP' ] || 'strip'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -46,7 +46,7 @@ task :all => [ SO_FILE ]
 
 file SO_FILE => OBJ do |t|
    sh "#{CXX} -shared -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
-   sh "#{STRIP} --strip-all #{t.name}"
+   sh "#{STRIP} #{t.name}"
 end
 
 task :test => [ SO_FILE ]
