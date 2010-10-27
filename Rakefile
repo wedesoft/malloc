@@ -26,17 +26,20 @@ EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
 OBJ = CC_FILES.ext 'o'
-$CXXFLAGS = ENV[ 'CXXFLAGS' ] || ''
-$CXXFLAGS = "#{$CXXFLAGS} -fPIC -DNDEBUG"
+$CXXFLAGS = "-DNDEBUG #{RbConfig::CONFIG[ 'CPPFLAGS' ]} " +
+            "#{RbConfig::CONFIG[ 'CFLAGS' ]}"
 if RbConfig::CONFIG[ 'rubyhdrdir' ]
   $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'rubyhdrdir' ]} " +
               "-I#{RbConfig::CONFIG[ 'rubyhdrdir' ]}/#{RbConfig::CONFIG[ 'arch' ]}"
 else
   $CXXFLAGS = "#{$CXXFLAGS} -I#{RbConfig::CONFIG[ 'archdir' ]}"
 end
-$LIBRUBYARG = "-L#{RbConfig::CONFIG[ 'libdir' ]} #{RbConfig::CONFIG[ 'LIBRUBYARG' ]}"
+$LIBRUBYARG = "-L#{RbConfig::CONFIG[ 'libdir' ]} " +
+              "#{RbConfig::CONFIG[ 'LIBRUBYARG' ]} #{RbConfig::CONFIG[ 'LDFLAGS' ]} " +
+              "#{RbConfig::CONFIG[ 'SOLIBS' ]} #{RbConfig::CONFIG[ 'DLDLIBS' ]}"
 $SITELIBDIR = RbConfig::CONFIG[ 'sitelibdir' ]
 $SITEARCHDIR = RbConfig::CONFIG[ 'sitearchdir' ]
+$LDSHARED = RbConfig::CONFIG[ 'LDSHARED' ][ 4 .. -1 ]
 
 task :default => :all
 
@@ -44,7 +47,7 @@ desc 'Compile Ruby extension (default)'
 task :all => [ SO_FILE ]
 
 file SO_FILE => OBJ do |t|
-   sh "#{CXX} -shared -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
+   sh "g++ #{$LDSHARED} -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
 end
 
 task :test => [ SO_FILE ]
