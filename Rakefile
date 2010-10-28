@@ -15,7 +15,7 @@ CC_FILES = FileList[ 'ext/*.cc' ]
 HH_FILES = FileList[ 'ext/*.hh' ] + FileList[ 'ext/*.tcc' ]
 TC_FILES = FileList[ 'test/tc_*.rb' ]
 TS_FILES = FileList[ 'test/ts_*.rb' ]
-SO_FILE = "ext/#{PKG_NAME}.#{CFG[ 'DLEXT' ]}"
+SO_FILE = "ext/#{PKG_NAME.tr '\-', '_'}.#{CFG[ 'DLEXT' ]}"
 PKG_FILES = [ 'Rakefile', 'README.md', 'COPYING', '.document' ] +
             RB_FILES + CC_FILES + HH_FILES + TS_FILES + TC_FILES
 BIN_FILES = [ 'README.md', 'COPYING', '.document', SO_FILE ] +
@@ -46,7 +46,7 @@ desc 'Compile Ruby extension (default)'
 task :all => [ SO_FILE ]
 
 file SO_FILE => OBJ do |t|
-   sh "g++ #{$LDSHARED} -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
+   sh "#{CXX} #{$LDSHARED} -o #{t.name} #{OBJ} #{$LIBRUBYARG}"
 end
 
 task :test => [ SO_FILE ]
