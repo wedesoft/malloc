@@ -45,8 +45,6 @@ module Hornetseye
       # Allocate the specified number of bytes of raw memory.
       #
       # @example Allocate raw memory
-      #   require 'malloc'
-      #   include Hornetseye
       #   m = Malloc.new 32
       #   # Malloc(32)
       #
@@ -67,8 +65,6 @@ module Hornetseye
     # Number of bytes allocated
     #
     # @example Querying size of allocated memory
-    #   require 'malloc'
-    #   include Hornetseye
     #   m = Malloc.new 32
     #   m.size
     #   # 32
@@ -81,8 +77,7 @@ module Hornetseye
     # Display information about this object
     #
     # @example Displaying information about a Malloc object
-    #   require 'malloc'
-    #   Hornetseye::Malloc.new( 8 ).inspect
+    #   Malloc.new( 8 ).inspect
     #   "Malloc(8)"
     #
     # @return [String] A string with information about this object.
@@ -110,8 +105,7 @@ module Hornetseye
     # Display information about this object
     #
     # @example Displaying information about a Malloc object
-    #   require 'malloc'
-    #   Hornetseye::Malloc.new( 8 ).to_s
+    #   Malloc.new( 8 ).to_s
     #   "Malloc(8)"
     #
     # @return [String] A string with information about this object.
@@ -122,8 +116,6 @@ module Hornetseye
     # Operator for doing pointer arithmetic
     #
     # @example Pointer arithmetic
-    #   require 'malloc'
-    #   include Hornetseye
     #   m = Malloc.new 4
     #   # Malloc(4)
     #   m.write 'abcd'
@@ -149,8 +141,6 @@ module Hornetseye
     # Read data from memory
     #
     # @example Reading and writing data
-    #   require 'malloc'
-    #   include Hornetseye
     #   m = Malloc.new 4
     #   # Malloc(4)
     #   m.write 'abcd'
@@ -173,8 +163,6 @@ module Hornetseye
     # Write data to memory
     #
     # @example Reading and writing data
-    #   require 'malloc'
-    #   include Hornetseye
     #   m = Malloc.new 4
     #   # Malloc(4)
     #   m.write 'abcd'
@@ -208,8 +196,6 @@ module Hornetseye
   # Shortcut for instantiating Malloc object
   #
   # @example Create malloc object
-  #   require 'malloc'
-  #   include Hornetseye
   #   m = Malloc 4
   #   # Malloc(4)
   #

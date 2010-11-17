@@ -25,5 +25,15 @@ Alternatively you can build and install the Ruby extension from source as follow
 Usage
 -----
 
+Simply run Interactive Ruby:
+
+    $ irb
+
+You can load the Ruby extension like this:
+
+    require 'rubygems'
+    require 'malloc'
+    include Hornetseye
+
 See documentation of {Hornetseye::Malloc} on how to use this Ruby extension.
 
