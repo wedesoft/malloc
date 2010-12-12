@@ -15,7 +15,7 @@ Installation
 
 To install this Ruby extension, use the following command:
 
-    $ sudo gem install hornetseye-alsa
+    $ sudo gem install malloc
 
 Alternatively you can build and install the Ruby extension from source as follows:
 
