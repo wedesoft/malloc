@@ -113,6 +113,17 @@ module Hornetseye
       inspect
     end
 
+    # Read complete data
+    #
+    # @example Export to string
+    #   m = Malloc.new 3
+    #   m.write 'abc'
+    #   m.export
+    #   "abc"
+    def export
+      read @size
+    end
+
     # Operator for doing pointer arithmetic
     #
     # @example Pointer arithmetic

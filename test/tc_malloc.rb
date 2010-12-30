@@ -61,6 +61,12 @@ class TC_Malloc < Test::Unit::TestCase
     assert_raise( RuntimeError ) { m.write Malloc.new( 7 ) }
   end
 
+  def test_export
+    m = Malloc.new 3
+    m.write 'abc'
+    assert_equal 'abc', m.export
+  end
+
   def test_plus
     assert_raise( RuntimeError ) { Malloc.new( 2 ) + ( -1 ) }
     assert_nothing_raised { Malloc.new( 2 ) + 2 }

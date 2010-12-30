@@ -7,7 +7,7 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.3.7'
+PKG_VERSION = '1.4.0'
 CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
