@@ -81,7 +81,6 @@ end
 begin
   require 'yard'
   YARD::Rake::YardocTask.new :yard do |y|
-    y.options << '--no-private'
     y.files << RB_FILES
   end
 rescue LoadError
@@ -113,7 +112,6 @@ begin
     s.extensions = %w{Rakefile}
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
-    s.rdoc_options = %w{--no-private}
     s.add_development_dependency %q{rake}
   end
   GEM_SOURCE = "#{PKG_NAME}-#{PKG_VERSION}.gem"
@@ -133,7 +131,6 @@ begin
     s.rubyforge_project = %q{hornetseye}
     s.has_rdoc = 'yard'
     s.extra_rdoc_files = []
-    s.rdoc_options = %w{--no-private}
   end
   GEM_BINARY = "#{PKG_NAME}-#{PKG_VERSION}-#{$BINSPEC.platform}.gem"
   desc "Build the gem file #{GEM_SOURCE}"
