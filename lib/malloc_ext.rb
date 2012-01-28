@@ -29,7 +29,7 @@ class String
     end
 
   end
-  
+
 end
 
 # Namespace of the Hornetseye project.
