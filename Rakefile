@@ -22,6 +22,7 @@ BIN_FILES = [ 'README.md', 'COPYING', '.document', SO_FILE ] +
             RB_FILES + TS_FILES + TC_FILES
 SUMMARY = %q{Object for raw memory allocation and pointer operations}
 DESCRIPTION = %q{This Ruby extension defines the class Hornetseye::Malloc. Hornetseye::Malloc#new allows you to allocate memory, using Hornetseye::Malloc#+ one can do pointer manipulation, and Hornetseye::Malloc#read and Hornetseye::Malloc#write provide reading Ruby strings from memory and writing Ruby strings to memory.}
+LICENSE = 'GPL-3+'
 AUTHOR = %q{Jan Wedekind}
 EMAIL = %q{jan@wedesoft.de}
 HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
@@ -87,6 +88,18 @@ rescue LoadError
   STDERR.puts 'Please install \'yard\' if you want to generate documentation'
 end
 
+begin
+  require 'fpm'
+  desc 'Create Debian package'
+  task :deb => :gem do
+    system "fpm -f -s gem -t deb -n #{PKG_NAME} -m '#{AUTHOR} <#{EMAIL}>' " +
+           "--deb-priority optional -d ruby1.9.1 " +
+           "pkg/#{PKG_NAME}-#{PKG_VERSION}.gem"
+  end
+rescue LoadError
+  STDERR.puts 'Please install \'fpm\' if you want to create Debian packages'
+end
+
 Rake::PackageTask.new PKG_NAME, PKG_VERSION do |p|
   p.need_tar = true
   p.package_files = PKG_FILES
@@ -102,6 +115,7 @@ begin
     s.date = Date.today.to_s
     s.summary = SUMMARY
     s.description = DESCRIPTION
+    s.license = LICENSE
     s.author = AUTHOR
     s.email = EMAIL
     s.homepage = HOMEPAGE
@@ -122,6 +136,7 @@ begin
     s.date = Date.today.to_s
     s.summary = SUMMARY
     s.description = DESCRIPTION
+    s.license = LICENSE
     s.author = AUTHOR
     s.email = EMAIL
     s.homepage = HOMEPAGE
