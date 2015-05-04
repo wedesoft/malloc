@@ -77,4 +77,9 @@ class TC_Malloc < Test::Unit::TestCase
     assert_raise( RuntimeError ) { ( m + 2 ).read 5 }
   end
 
+  def test_align
+    m = Malloc.align 256, 16
+    assert_equal 0, m.to_i & 15
+  end
+
 end

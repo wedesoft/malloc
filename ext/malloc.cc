@@ -40,6 +40,8 @@ VALUE Malloc::init( VALUE rbModule )
                     RUBY_METHOD_FUNC( mallocRead ), 1 );
   rb_define_method( cRubyClass, "orig_write",
                     RUBY_METHOD_FUNC( mallocWrite ), -1 );
+  rb_define_method( cRubyClass, "to_i",
+                    RUBY_METHOD_FUNC( mallocToI ), 0 );
   return cRubyClass;
 }
 
@@ -103,5 +105,11 @@ VALUE Malloc::mallocWrite( int argc, VALUE *rbArgv, VALUE rbSelf )
     rb_raise( rb_eRuntimeError, "%s", e.what() );
   };
   return retVal;
+}
+
+VALUE Malloc::mallocToI( VALUE rbSelf )
+{
+  char *self; Data_Get_Struct( rbSelf, char, self );
+  return LONG2NUM((long)self);
 }
 

@@ -60,6 +60,26 @@ module Hornetseye
 
       private :orig_new
 
+      # Create new Malloc object with aligned memory
+      #
+      # Allocate memory with specified alignment
+      #
+      # @example Allocate raw memory
+      #   m = Malloc.align 256, 16
+      #   # Malloc(256)
+      #
+      # @param [Integer] size Number of bytes to allocate.
+      # @param [Integer] alignment Page size of memory to align with
+      # @return [Malloc] A new Malloc object.
+      #
+      # @see Malloc
+      def align size, alignment
+        offset = alignment - 1
+        retval = Malloc.new size + offset
+        incr = ((retval.to_i + offset) & ~offset) - retval.to_i
+        retval + incr
+      end
+
     end
 
     # Number of bytes allocated
