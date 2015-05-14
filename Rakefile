@@ -7,7 +7,7 @@ require 'rake/loaders/makefile'
 require 'rbconfig'
 
 PKG_NAME = 'malloc'
-PKG_VERSION = '1.5.0'
+PKG_VERSION = '1.5.1'
 CFG = RbConfig::CONFIG
 CXX = ENV[ 'CXX' ] || 'g++'
 RB_FILES = FileList[ 'lib/**/*.rb' ]
@@ -29,9 +29,10 @@ HOMEPAGE = %q{http://wedesoft.github.com/malloc/}
 
 OBJ = CC_FILES.ext 'o'
 $CXXFLAGS = "-DNDEBUG #{CFG[ 'CPPFLAGS' ]} #{CFG[ 'CFLAGS' ]}"
-if CFG[ 'rubyhdrdir' ]
-  $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG[ 'rubyhdrdir' ]} " + 
-              "-I#{CFG[ 'rubyhdrdir' ]}/#{CFG[ 'arch' ]}"
+if CFG['rubyarchhdrdir']
+  $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG['rubyhdrdir']} -I#{CFG['rubyarchhdrdir']}"
+elsif CFG['rubyhdrdir']
+  $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG['rubyhdrdir' ]} -I#{CFG['rubyhdrdir']}/#{CFG['arch']}"
 else
   $CXXFLAGS = "#{$CXXFLAGS} -I#{CFG[ 'archdir' ]}"
 end
@@ -86,18 +87,6 @@ begin
   end
 rescue LoadError
   STDERR.puts 'Please install \'yard\' if you want to generate documentation'
-end
-
-begin
-  require 'fpm'
-  desc 'Create Debian package'
-  task :deb => :gem do
-    system "fpm -f -s gem -t deb -n #{PKG_NAME} -m '#{AUTHOR} <#{EMAIL}>' " +
-           "--deb-priority optional -d ruby1.9.1 " +
-           "pkg/#{PKG_NAME}-#{PKG_VERSION}.gem"
-  end
-rescue LoadError
-  STDERR.puts 'Please install \'fpm\' if you want to create Debian packages'
 end
 
 Rake::PackageTask.new PKG_NAME, PKG_VERSION do |p|
